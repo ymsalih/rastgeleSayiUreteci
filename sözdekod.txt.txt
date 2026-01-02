@@ -1,0 +1,16 @@
+ALGORITHM HashBasedRandomGenerator
+INPUT: seed, bit_length
+OUTPUT: random_bit_string
+
+counter ← 0
+random_bits ← empty string
+
+WHILE length(random_bits) < bit_length DO
+    data ← seed || counter
+    hash ← SHA256(data)
+    bits ← Convert hash to binary
+    random_bits ← random_bits + bits
+    counter ← counter + 1
+END WHILE
+
+RETURN first bit_length bits of random_bits

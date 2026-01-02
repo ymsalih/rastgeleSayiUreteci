@@ -1,0 +1,33 @@
+import hashlib
+
+def generate_random_bits(seed: str, bit_length: int):
+    counter = 0
+    bits = ""
+
+    while len(bits) < bit_length:
+        data = f"{seed}{counter}".encode()
+        hash_digest = hashlib.sha256(data).hexdigest()
+        binary = bin(int(hash_digest, 16))[2:].zfill(256)
+        bits += binary
+        counter += 1
+
+    return bits[:bit_length]
+
+
+def analyze_bits(bit_string):
+    zeros = bit_string.count('0')
+    ones = bit_string.count('1')
+    return zeros, ones
+
+
+if __name__ == "__main__":
+    seed = "bilgi_sagligi_odev"
+    bit_length = 100000
+
+    bits = generate_random_bits(seed, bit_length)
+    zeros, ones = analyze_bits(bits)
+
+    print("Toplam Bit:", bit_length)
+    print("0 Sayısı:", zeros)
+    print("1 Sayısı:", ones)
+    print("Oran (0/1):", zeros / ones)
